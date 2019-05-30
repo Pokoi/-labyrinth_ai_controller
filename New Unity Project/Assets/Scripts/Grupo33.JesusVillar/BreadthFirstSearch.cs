@@ -11,10 +11,7 @@ namespace BreadthFirstSearch
     /// Breadth first search.
     /// </summary>
     public class BreadthFirstSearch : AbstractPathMind
-    {
-
-        enum Phases { Searching, PathFound, NotPathFound }
-        Phases current_phase = Phases.Searching;
+    {       
 
         List<Node> open_list;
         List<Locomotion.MoveDirection> movements;
@@ -23,6 +20,7 @@ namespace BreadthFirstSearch
 
         public override Locomotion.MoveDirection GetNextMove(BoardInfo boardInfo, CellInfo currentPos, CellInfo[] goals)
         {
+            
             switch (current_phase)
             {
                 case Phases.Searching: SetMovements(Search(ref boardInfo, ref currentPos, ref goals)); break;

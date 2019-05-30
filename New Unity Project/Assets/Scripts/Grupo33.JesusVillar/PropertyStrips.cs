@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class PropertyStrips : MonoBehaviour
+    public class PropertyStrips
     {
         string _tag;
 
@@ -12,5 +12,6 @@ namespace Assets.Scripts
         {
             _tag = tag;
         }
+        public string GetTag() { return _tag; }
     }
 }

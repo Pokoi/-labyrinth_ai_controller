@@ -45,6 +45,7 @@ namespace Assets.Scripts
             PlaceableItem.Activated = true;
 
 
+
             if (this.Type == PlaceableItem.ItemType.Goal)
                 QuitGame();
             if (this.Type== PlaceableItem.ItemType.Enemy)

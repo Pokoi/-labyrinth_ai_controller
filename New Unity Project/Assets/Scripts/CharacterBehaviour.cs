@@ -22,9 +22,7 @@ namespace Assets.Scripts
             LocomotionController.SetCharacter(this);
 
             PlanController = GetComponent<Planner>();
-            PlanController.SetCharacter(this);
-
-            
+            PlanController.SetCharacter(this);           
 
         }
 
@@ -33,17 +31,20 @@ namespace Assets.Scripts
             if (BoardManager == null) return;
             if (this.currentTarget == null)
             {
+                if (PlanController.currentPlan.Count != 0) {
+                    PlanController.currentPlan.RemoveAt(0);}
+
                 CellInfo nextAction = PlanController.GetNextAction();
                 this.SetCurrentTarget(nextAction);
             }
             if (LocomotionController.MoveNeed)
             {
-
                 var boardClone = (BoardInfo)BoardManager.boardInfo.Clone();
                 LocomotionController.SetNewDirection(PathController.GetNextMove(boardClone,LocomotionController.CurrentEndPosition(),new [] {this.currentTarget}));
                 if(this.currentTarget == LocomotionController.CurrentEndPosition())
-                {
+                {                    
                     SetCurrentTarget(null);
+                    if (PlanController.currentPlan.Count != 0) { foreach (var property in PlanController.currentPlan[0].GetAddedProperties()) PlanController.AddProperty(property); }
                 }
             }
         }
@@ -53,6 +54,8 @@ namespace Assets.Scripts
         public void SetCurrentTarget(CellInfo newTargetCell)
         {
             this.currentTarget = newTargetCell;
+            LocomotionController.MoveNeed = true;
+            PathController.current_phase = AbstractPathMind.Phases.Searching;
         }
     }
 }

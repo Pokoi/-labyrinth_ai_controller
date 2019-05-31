@@ -15,20 +15,21 @@ namespace BreadthFirstSearch
 
         List<Node> open_list;
         List<Locomotion.MoveDirection> movements;
+        Color tint_color;
+        Color walked_color;
 
         Node goal_node;
 
         public override Locomotion.MoveDirection GetNextMove(BoardInfo boardInfo, CellInfo currentPos, CellInfo[] goals)
         {
-            
+            if(walked_color == null) walked_color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+
             switch (current_phase)
             {
                 case Phases.Searching: SetMovements(Search(ref boardInfo, ref currentPos, ref goals)); break;
-                case Phases.PathFound: return ReadActions();
+                case Phases.PathFound: currentPos.TintCell(walked_color, walked_color); return ReadActions();
                 case Phases.NotPathFound: return Locomotion.MoveDirection.None;
-
             }
-
             return Locomotion.MoveDirection.None;
         }
 
@@ -46,6 +47,9 @@ namespace BreadthFirstSearch
         /// <param name="goals">Goals.</param>
         private Node Search(ref BoardInfo _board, ref CellInfo initial_position, ref CellInfo[] goals)
         {
+            //Generate the random color
+            tint_color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+
             //Create the open node list
             open_list = new List<Node>();
 
@@ -61,9 +65,10 @@ namespace BreadthFirstSearch
 
                 //Check if it's the goal and return it
                 if (IsGoal(node, ref goals)) return node;
-                
+
                 //Expand the children of the node and add it to the list if there arent already in the list
-                foreach (var child in node.Expand(ref _board)) if (!InList(child)) open_list.Add(child);
+                foreach (var child in node.Expand(ref _board))
+                { if (!InList(child)) { open_list.Add(child); child.GetCell.TintCell(tint_color, walked_color);} }
             }
 
             //If no goal is found return null and updates the phase

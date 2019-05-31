@@ -46,23 +46,13 @@ namespace Assets.Scripts
 
 
 
-            if (this.Type == PlaceableItem.ItemType.Goal)
-                QuitGame();
+            //if (this.Type == PlaceableItem.ItemType.Goal)
+            //    QuitGame();
             if (this.Type== PlaceableItem.ItemType.Enemy)
                 GameObject.Destroy(gameObject,0.5f);
         }
 
-        public void QuitGame()
-        {
-            // save any game data here
-#if UNITY_EDITOR
-            // Application.Quit() does not work in the editor so
-            // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-         Application.Quit();
-#endif
-        }
+       
         void OnGUI()
         {
             Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);

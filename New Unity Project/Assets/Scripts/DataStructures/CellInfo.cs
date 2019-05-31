@@ -16,6 +16,8 @@ namespace Assets.Scripts.DataStructures
         public float WalkCost { get; private set; }
         public bool Walkable { get; private set; }
 
+        GameObject cell_gameobject;
+
         public CellInfo(int col, int row)
         {
             this.WalkCost = 1.0f;
@@ -58,17 +60,19 @@ namespace Assets.Scripts.DataStructures
         {
             var tile = boardManager.floorTile;
             if (!this.Walkable) tile = boardManager.wallTile;
-            var go =  GameObject.Instantiate(tile, new Vector3(this.ColumnId, this.RowId, 0f),
+            cell_gameobject =  GameObject.Instantiate(tile, new Vector3(this.ColumnId, this.RowId, 0f),
                 Quaternion.identity, boardManager.transform);
             if (ItemInCell != null)
             {
-                var itGO = this.ItemInCell.CreateGameObject(boardManager, go.transform);
+                var itGO = this.ItemInCell.CreateGameObject(boardManager, cell_gameobject.transform);
                 itGO.GetComponent<ItemLogic>().Type = this.ItemInCell.Type;
                 itGO.GetComponent<ItemLogic>().PlaceableItem = this.ItemInCell;
 
             }
-            return go;
+            return cell_gameobject;
         }
+
+        public void TintCell(Color color, Color walked) { if(cell_gameobject.GetComponentInChildren<SpriteRenderer>().color !=  walked) cell_gameobject.GetComponentInChildren<SpriteRenderer>().color = color; }
 
         public CellInfo[] WalkableNeighbours(BoardInfo board)
         {

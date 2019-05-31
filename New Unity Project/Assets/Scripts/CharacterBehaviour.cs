@@ -31,8 +31,7 @@ namespace Assets.Scripts
             if (BoardManager == null) return;
             if (this.currentTarget == null)
             {
-                if (PlanController.currentPlan.Count != 0) {
-                    PlanController.currentPlan.RemoveAt(0);}
+                if (PlanController.currentPlan.Count != 0) { PlanController.currentPlan.RemoveAt(0); if(PlanController.currentPlan.Count == 0) PlanController.QuitGame(); }                
 
                 CellInfo nextAction = PlanController.GetNextAction();
                 this.SetCurrentTarget(nextAction);

@@ -45,8 +45,7 @@ namespace Assets.Scripts
         }
 
         public CellInfo GetNextAction()
-        {
-            
+        {            
             if(all_operators.Count == 0)
             {
                 var l = this._character.BoardManager.boardInfo.ItemsOnBoard;
@@ -65,8 +64,7 @@ namespace Assets.Scripts
             Analize();                    
             
             var nextOperation = currentPlan[0];            
-            return nextOperation.GetCellInfo();
-            
+            return nextOperation.GetCellInfo();            
         }
 
         private void Analize()
@@ -98,6 +96,18 @@ namespace Assets.Scripts
               
             }
             currentPlan.Reverse();
+        }
+
+        public void QuitGame()
+        {
+            // save any game data here
+#if UNITY_EDITOR
+            // Application.Quit() does not work in the editor so
+            // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
         }
     }
 }

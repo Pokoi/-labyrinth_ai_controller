@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5951278b92d924eb283b63eacf28ea10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current_phase: 0
 --- !u!1 &760955683
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 198952, guid: 1f54754c41c64a04aac6945bc71af6ca, type: 3}
   Planner: 1
-  seed: 2019
+  seed: 531
   numEnemies: 0
 --- !u!4 &1401979017
 Transform:

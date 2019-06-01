@@ -22,7 +22,7 @@ namespace Assets.Scripts
             currentPlan    = new List<OperatorStrips>();
             all_operators  = new List<OperatorStrips>();
             own_properties = new List<PropertyStrips>();
-            desired_tags = new List<string>();
+            desired_tags   = new List<string>();
             
         }
 
@@ -86,9 +86,7 @@ namespace Assets.Scripts
                         if (desired_tags.Contains(added_conditions[iterator].GetTag()) && !currentPlan.Contains(_operator))
                         {
                             currentPlan.Add(_operator);
-                            foreach (var condition in _operator.GetPreconditions())
-                                if (!owned_tags.Contains(condition.GetTag()))
-                                    desired_tags.Add(condition.GetTag());                            
+                            foreach (var condition in _operator.GetPreconditions()) if (!owned_tags.Contains(condition.GetTag())) desired_tags.Add(condition.GetTag());                            
                             foreach (var added in _operator.GetAddedProperties()) if (desired_tags.Contains(added.GetTag())) desired_tags.Remove(added.GetTag());
                         }
                     }            
